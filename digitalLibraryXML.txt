@@ -1,0 +1,207 @@
+//books.xml
+
+<?xml version="1.0"?>
+
+<books>
+
+    <book>
+        <title>The Alchemist</title>
+        <author>Paulo Coelho</author>
+        <genre>Fiction</genre>
+        <year>1988</year>
+        <rating>4.5</rating>
+    </book>
+
+    <book>
+        <title>Clean Code</title>
+        <author>Robert Martin</author>
+        <genre>Programming</genre>
+        <year>2008</year>
+        <rating>4.8</rating>
+    </book>
+
+    <book>
+        <title>Harry Potter</title>
+        <author>J.K. Rowling</author>
+        <genre>Fantasy</genre>
+        <year>1997</year>
+        <rating>4.7</rating>
+    </book>
+
+    <book>
+        <title>Rich Dad Poor Dad</title>
+        <author>Robert Kiyosaki</author>
+        <genre>Finance</genre>
+        <year>1997</year>
+        <rating>4.4</rating>
+    </book>
+
+    <book>
+        <title>Atomic Habits</title>
+        <author>James Clear</author>
+        <genre>Self Help</genre>
+        <year>2018</year>
+        <rating>4.9</rating>
+    </book>
+
+</books>
+
+
+
+//index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Library</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        button, select {
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Digital Library</h2>
+
+Filter by Genre:
+
+<select id="filter" onchange="loadXML()">
+    <option value="All">All</option>
+    <option value="Fiction">Fiction</option>
+    <option value="Programming">Programming</option>
+    <option value="Fantasy">Fantasy</option>
+    <option value="Finance">Finance</option>
+    <option value="Self Help">Self Help</option>
+</select>
+
+<button onclick="sortByYear()">
+    Sort by Year
+</button>
+
+<button onclick="sortByRating()">
+    Sort by Rating
+</button>
+
+<br><br>
+
+<table id="table">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Year</th>
+        <th>Rating</th>
+    </tr>
+</table>
+
+<script>
+
+let bookData = [];
+
+function loadXML() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "books.xml", true);
+
+    xhr.onload = function() {
+
+        let xml = xhr.responseXML;
+
+        let books = xml.getElementsByTagName("book");
+
+        bookData = [];
+
+        for (let i = 0; i < books.length; i++) {
+
+            bookData.push({
+                title:
+                    books[i].getElementsByTagName("title")[0].textContent,
+
+                author:
+                    books[i].getElementsByTagName("author")[0].textContent,
+
+                genre:
+                    books[i].getElementsByTagName("genre")[0].textContent,
+
+                year:
+                    books[i].getElementsByTagName("year")[0].textContent,
+
+                rating:
+                    books[i].getElementsByTagName("rating")[0].textContent
+            });
+        }
+
+        display(bookData);
+    };
+
+    xhr.send();
+}
+
+function display(data) {
+
+    let filter =
+        document.getElementById("filter").value;
+
+    let table =
+        document.getElementById("table");
+
+    table.innerHTML = `
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Year</th>
+            <th>Rating</th>
+        </tr>
+    `;
+
+    for (let i = 0; i < data.length; i++) {
+
+        if (filter == "All" ||
+            filter == data[i].genre) {
+
+            let row = `
+                <tr>
+                    <td>${data[i].title}</td>
+                    <td>${data[i].author}</td>
+                    <td>${data[i].genre}</td>
+                    <td>${data[i].year}</td>
+                    <td>${data[i].rating}</td>
+                </tr>
+            `;
+
+            table.innerHTML += row;
+        }
+    }
+}
+
+function sortByYear() {
+
+    bookData.sort((a, b) => a.year - b.year);
+
+    display(bookData);
+}
+
+function sortByRating() {
+
+    bookData.sort((a, b) => b.rating - a.rating);
+
+    display(bookData);
+}
+
+window.onload = loadXML;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Statistics Table</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 500px;
+            margin: auto;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .even {
+            background-color: lightblue;
+        }
+
+        input, button {
+            padding: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Number Statistics Table</h2>
+
+<input type="number"
+       id="number"
+       placeholder="Enter Maximum Number">
+
+<button onclick="generateTable()">
+    Generate Table
+</button>
+
+<br><br>
+
+<table id="table">
+    <tr>
+        <th>Number</th>
+        <th>Square</th>
+        <th>Cube</th>
+        <th>Even/Odd</th>
+    </tr>
+</table>
+
+<script>
+
+function generateTable() {
+
+    let n =
+        document.getElementById("number").value;
+
+    let table =
+        document.getElementById("table");
+
+    table.innerHTML = `
+        <tr>
+            <th>Number</th>
+            <th>Square</th>
+            <th>Cube</th>
+            <th>Even/Odd</th>
+        </tr>
+    `;
+
+    for (let i = 1; i <= n; i++) {
+
+        let square = i * i;
+
+        let cube = i * i * i;
+
+        let type =
+            (i % 2 == 0) ? "Even" : "Odd";
+
+        let rowClass =
+            (i % 2 == 0) ? "even" : "";
+
+        let row = `
+            <tr class="${rowClass}">
+                <td>${i}</td>
+                <td>${square}</td>
+                <td>${cube}</td>
+                <td>${type}</td>
+            </tr>
+        `;
+
+        table.innerHTML += row;
+    }
+}
+
+</script>
+
+</body>
+</html>
