@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Event Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+
+        input, button {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        #timer {
+            font-size: 22px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Countdown Event Tracker</h2>
+
+<input type="text"
+       id="eventName"
+       placeholder="Enter Event Name">
+
+<br>
+
+<input type="datetime-local"
+       id="eventDate">
+
+<br>
+
+<button onclick="startCountdown()">
+    Start
+</button>
+
+<h3 id="title"></h3>
+
+<p id="timer"></p>
+
+<script>
+
+function startCountdown() {
+
+    let name =
+        document.getElementById("eventName").value;
+
+    let date =
+        new Date(
+            document.getElementById("eventDate").value
+        );
+
+    document.getElementById("title").innerHTML =
+        name;
+
+    setInterval(function () {
+
+        let now = new Date();
+
+        let diff = date - now;
+
+        if (diff <= 0) {
+
+            document.getElementById("timer").innerHTML =
+                "Event Started";
+
+            return;
+        }
+
+        let days =
+            Math.floor(diff / 86400000);
+
+        let hours =
+            new Date(diff).getUTCHours();
+
+        let minutes =
+            new Date(diff).getUTCMinutes();
+
+        let seconds =
+            new Date(diff).getUTCSeconds();
+
+        document.getElementById("timer").innerHTML =
+            days + " Days " +
+            hours + " Hours " +
+            minutes + " Minutes " +
+            seconds + " Seconds";
+
+    }, 1000);   
+}
+
+</script>
+
+</body>
+</html>
