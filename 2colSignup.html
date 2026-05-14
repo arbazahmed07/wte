@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup Page</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left {
+            flex: 1;
+            background-image: url("https://picsum.photos/800/800");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+        }
+
+        .message {
+            font-size: 14px;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="left"></div>
+
+    <div class="right">
+
+        <form onsubmit="return validateForm()">
+
+            <h2>Signup Form</h2>
+
+            <input type="text"
+                   id="name"
+                   placeholder="Name">
+
+            <input type="text"
+                   id="email"
+                   placeholder="Email"
+                   onkeyup="checkEmail()">
+
+            <div id="emailMessage"
+                 class="message"></div>
+
+            <input type="password"
+                   id="password"
+                   placeholder="Password"
+                   onkeyup="checkPassword()">
+
+            <div id="passwordMessage"
+                 class="message"></div>
+
+            <input type="password"
+                   id="confirmPassword"
+                   placeholder="Confirm Password"
+                   onkeyup="checkConfirmPassword()">
+
+            <div id="confirmMessage"
+                 class="message"></div>
+
+            <input type="text"
+                   id="phone"
+                   placeholder="Phone Number"
+                   onkeyup="checkPhone()">
+
+            <div id="phoneMessage"
+                 class="message"></div>
+
+            <br>
+
+            <button type="submit">
+                Signup
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+function checkEmail() {
+
+    let email =
+        document.getElementById("email").value;
+
+    let pattern =
+        /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    let message =
+        document.getElementById("emailMessage");
+
+    if (pattern.test(email)) {
+
+        message.innerHTML = "Valid Email";
+        message.className = "message green";
+    }
+    else {
+
+        message.innerHTML = "Invalid Email";
+        message.className = "message red";
+    }
+}
+
+function checkPassword() {
+
+    let password =
+        document.getElementById("password").value;
+
+    let message =
+        document.getElementById("passwordMessage");
+
+    if (password.length < 6) {
+
+        message.innerHTML = "Weak Password";
+        message.className = "message red";
+    }
+    else {
+
+        message.innerHTML = "Strong Password";
+        message.className = "message green";
+    }
+}
+
+function checkConfirmPassword() {
+
+    let password =
+        document.getElementById("password").value;
+
+    let confirm =
+        document.getElementById("confirmPassword").value;
+
+    let message =
+        document.getElementById("confirmMessage");
+
+    if (password == confirm) {
+
+        message.innerHTML = "Passwords Match";
+        message.className = "message green";
+    }
+    else {
+
+        message.innerHTML = "Passwords Do Not Match";
+        message.className = "message red";
+    }
+}
+
+function checkPhone() {
+
+    let phone =
+        document.getElementById("phone").value;
+
+    let message =
+        document.getElementById("phoneMessage");
+
+    let pattern = /^\d{10}$/;
+
+    if (pattern.test(phone)) {
+
+        message.innerHTML = "Valid Phone Number";
+        message.className = "message green";
+    }
+    else {
+
+        message.innerHTML =
+            "Phone Number must contain 10 digits";
+
+        message.className = "message red";
+    }
+}
+
+function validateForm() {
+
+    let email =
+        document.getElementById("email").value;
+
+    let password =
+        document.getElementById("password").value;
+
+    let confirm =
+        document.getElementById("confirmPassword").value;
+
+    let phone =
+        document.getElementById("phone").value;
+
+    let emailPattern =
+        /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    let phonePattern =
+        /^\d{10}$/;
+
+    if (!emailPattern.test(email)) {
+
+        alert("Invalid Email");
+
+        return false;
+    }
+
+    if (password.length < 6) {
+
+        alert("Weak Password");
+
+        return false;
+    }
+
+    if (password != confirm) {
+
+        alert("Passwords do not match");
+
+        return false;
+    }
+
+    if (!phonePattern.test(phone)) {
+
+        alert("Invalid Phone Number");
+
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>

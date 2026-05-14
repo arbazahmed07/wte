@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Seminar</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+
+        .banner {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .speakers {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid gray;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px gray;
+        }
+
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .register {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 300px;
+            padding: 20px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="banner">
+    <h1>University Seminar 2026</h1>
+    <p>Emerging Technologies and Innovation</p>
+</div>
+
+<h2 align="center">Speakers</h2>
+
+<div class="speakers">
+
+    <div class="card"
+         onclick="showDetails('Dr. Arun', 'AI Expert')">
+
+        <h3>Dr. Arun</h3>
+        <p>Artificial Intelligence</p>
+    </div>
+
+    <div class="card"
+         onclick="showDetails('Prof. Sneha', 'Cyber Security Specialist')">
+
+        <h3>Prof. Sneha</h3>
+        <p>Cyber Security</p>
+    </div>
+
+    <div class="card"
+         onclick="showDetails('Mr. Rahul', 'Cloud Computing Engineer')">
+
+        <h3>Mr. Rahul</h3>
+        <p>Cloud Computing</p>
+    </div>
+
+</div>
+
+<h2 align="center">Schedule</h2>
+
+<table>
+    <tr>
+        <th>Time</th>
+        <th>Topic</th>
+        <th>Speaker</th>
+    </tr>
+
+    <tr>
+        <td>10:00 AM</td>
+        <td>Artificial Intelligence</td>
+        <td>Dr. Arun</td>
+    </tr>
+
+    <tr>
+        <td>11:30 AM</td>
+        <td>Cyber Security</td>
+        <td>Prof. Sneha</td>
+    </tr>
+
+    <tr>
+        <td>2:00 PM</td>
+        <td>Cloud Computing</td>
+        <td>Mr. Rahul</td>
+    </tr>
+</table>
+
+<button class="register">
+    Register Now
+</button>
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <span class="close"
+              onclick="closeModal()">
+              X
+        </span>
+
+        <h2 id="speakerName"></h2>
+
+        <p id="speakerInfo"></p>
+
+    </div>
+
+</div>
+
+<script>
+
+function showDetails(name, info) {
+
+    document.getElementById("speakerName").innerHTML =
+        name;
+
+    document.getElementById("speakerInfo").innerHTML =
+        info;
+
+    document.getElementById("modal").style.display =
+        "block";
+}
+
+function closeModal() {
+
+    document.getElementById("modal").style.display =
+        "none";
+}
+
+</script>
+
+</body>
+</html>
