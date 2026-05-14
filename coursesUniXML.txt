@@ -1,0 +1,185 @@
+//courses.xml
+<?xml version="1.0"?>
+
+<courses>
+
+    <course>
+        <code>CSE101</code>
+        <title>Programming in C</title>
+        <credits>4</credits>
+        <instructor>Ramesh</instructor>
+        <semester>1</semester>
+    </course>
+
+    <course>
+        <code>CSE102</code>
+        <title>Data Structures</title>
+        <credits>4</credits>
+        <instructor>Suresh</instructor>
+        <semester>2</semester>
+    </course>
+
+    <course>
+        <code>CSE201</code>
+        <title>Java Programming</title>
+        <credits>3</credits>
+        <instructor>Mahesh</instructor>
+        <semester>3</semester>
+    </course>
+
+    <course>
+        <code>CSE202</code>
+        <title>Database Systems</title>
+        <credits>4</credits>
+        <instructor>Anita</instructor>
+        <semester>4</semester>
+    </course>
+
+    <course>
+        <code>CSE301</code>
+        <title>Operating Systems</title>
+        <credits>4</credits>
+        <instructor>Kiran</instructor>
+        <semester>5</semester>
+    </course>
+
+    <course>
+        <code>CSE302</code>
+        <title>Computer Networks</title>
+        <credits>3</credits>
+        <instructor>Priya</instructor>
+        <semester>6</semester>
+    </course>
+
+    <course>
+        <code>CSE401</code>
+        <title>Machine Learning</title>
+        <credits>4</credits>
+        <instructor>Arun</instructor>
+        <semester>7</semester>
+    </course>
+
+    <course>
+        <code>CSE402</code>
+        <title>Cloud Computing</title>
+        <credits>3</credits>
+        <instructor>Divya</instructor>
+        <semester>8</semester>
+    </course>
+
+</courses>
+
+
+
+
+//index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course List</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>University Courses</h2>
+
+Search by Title:
+<input type="text" id="search" onkeyup="loadXML()">
+
+<br><br>
+
+Filter by Semester:
+<select id="filter" onchange="loadXML()">
+    <option value="all">All</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+</select>
+
+<br><br>
+
+<table id="table">
+    <tr>
+        <th>Course Code</th>
+        <th>Title</th>
+        <th>Credits</th>
+        <th>Instructor</th>
+        <th>Semester</th>
+    </tr>
+</table>
+
+<script>
+
+function loadXML() {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "courses.xml", true);
+
+    xhr.onload = function() {
+
+        let xml = xhr.responseXML;
+        let courses = xml.getElementsByTagName("course");
+
+        let filter = document.getElementById("filter").value;
+        let search = document.getElementById("search").value.toLowerCase();
+
+        let table = document.getElementById("table");
+
+        table.innerHTML = `
+            <tr>
+                <th>Course Code</th>
+                <th>Title</th>
+                <th>Credits</th>
+                <th>Instructor</th>
+                <th>Semester</th>
+            </tr>
+        `;
+
+        for (let i = 0; i < courses.length; i++) {
+
+            let code = courses[i].getElementsByTagName("code")[0].textContent;
+            let title = courses[i].getElementsByTagName("title")[0].textContent;
+            let credits = courses[i].getElementsByTagName("credits")[0].textContent;
+            let instructor = courses[i].getElementsByTagName("instructor")[0].textContent;
+            let semester = courses[i].getElementsByTagName("semester")[0].textContent;
+
+            if ((filter === "all" || filter === semester) &&
+                title.toLowerCase().includes(search)) {
+
+                let row = `
+                    <tr>
+                        <td>${code}</td>
+                        <td>${title}</td>
+                        <td>${credits}</td>
+                        <td>${instructor}</td>
+                        <td>${semester}</td>
+                    </tr>
+                `;
+
+                table.innerHTML += row;
+            }
+        }
+    };
+
+    xhr.send();
+}
+
+window.onload = loadXML;
+
+</script>
+
+</body>
+</html>
